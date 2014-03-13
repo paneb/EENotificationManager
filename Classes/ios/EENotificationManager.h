@@ -12,27 +12,25 @@
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 #import <Foundation/Foundation.h>
-#import "TUBNotificationStates.h"
 
 #define EMIT_CHANGE @"EMIT_CHANGE"
 #define RECEIVE_CHANGE @"RECEIVE_CHANGE"
 
 #pragma mark - notification protocol
-@protocol TUBNotificationProtocol <NSObject>
+@protocol EENotificationProtocol <NSObject>
 
 - (void)stateDidChange:(NSNotification *)notification;
 
 @end
 
 #pragma mark - interfaces
-@interface TUBNotificationManager : NSObject <TUBNotificationProtocol>
+@interface EENotificationManager : NSObject <EENotificationProtocol>
 
 + (id)sharedInstance;
-- (void)addStateObserver:(NSObject<TUBNotificationProtocol>*)observer;
-- (void)removeStateObserver:(NSObject<TUBNotificationProtocol>*)observer;
+- (void)addStateObserver:(NSObject<EENotificationProtocol>*)observer;
+- (void)removeStateObserver:(NSObject<EENotificationProtocol>*)observer;
 
-- (void) willChangeState:(NotificationState)state withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle;
+- (void) willChangeState:(NSUInteger)state withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle;
 
 @end

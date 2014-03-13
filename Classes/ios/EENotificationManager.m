@@ -11,9 +11,10 @@
 //
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-#import "TUBNotificationManager.h"
 
-@implementation TUBNotificationManager
+#import "EENotificationManager.h"
+
+@implementation EENotificationManager
 
 -(id) init
 {
@@ -42,12 +43,12 @@
 }
 
 #pragma mark - Observers
-- (void)addStateObserver:(NSObject<TUBNotificationProtocol>*)observer
+- (void)addStateObserver:(NSObject<EENotificationProtocol>*)observer
 {
     [[NSNotificationCenter defaultCenter] addObserver:observer selector:@selector(stateDidChange:) name:RECEIVE_CHANGE object:nil];
 }
 
-- (void)removeStateObserver:(NSObject<TUBNotificationProtocol>*)observer
+- (void)removeStateObserver:(NSObject<EENotificationProtocol>*)observer
 {
     [[NSNotificationCenter defaultCenter] removeObserver:observer name:RECEIVE_CHANGE object:nil];
 }
@@ -56,26 +57,26 @@
 - (void)stateDidChange:(NSNotification *)notification{
     
     
-    NotificationState state = [((NSNumber*)[[notification userInfo] objectForKey:@"state"]) intValue];
+    //NSInteger state = [((NSNumber*)[[notification userInfo] objectForKey:@"state"]) longValue];
     
     NSNotification *myNotification = [NSNotification notificationWithName:RECEIVE_CHANGE object:self userInfo:[notification userInfo]];
     [[NSNotificationQueue defaultQueue] enqueueNotification:myNotification postingStyle:NSPostNow];
 }
 
 #pragma mark - Event Management
-- (void) willChangeState:(NotificationState)state withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle
+- (void) willChangeState:(NSUInteger)state withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle
 {
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:state], @"state", userDict, @"userDict", [NSNumber numberWithInt:postingStyle], @"postingStyle", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithLong:state], @"state", userDict, @"userDict", [NSNumber numberWithInt:postingStyle], @"postingStyle", nil];
     [self performSelectorOnMainThread:@selector(willChangeStateWithDictOnMainThread:) withObject:dict waitUntilDone:NO];
     
 }
 
 - (void)willChangeStateWithDictOnMainThread:(NSDictionary*)dict
 {
-    NotificationState state = [[dict valueForKey:@"state"] intValue];
+    NSInteger state = [[dict valueForKey:@"state"] intValue];
     NSDictionary *userDict = [dict valueForKey:@"userDict"];
     
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithInt:state] forKey:@"state"];
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithLong:state] forKey:@"state"];
     if (userDict){
         [resultDict addEntriesFromDictionary:userDict];
     }
