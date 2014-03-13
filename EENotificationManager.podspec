@@ -6,7 +6,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = "EENotificationManager"
-  s.version          = "0.1.0"
+  s.version          = "0.0.1"
   s.summary          = "A short description of EENotificationManager."
   s.description      = <<-DESC
                        An optional longer description of EENotificationManager
@@ -29,7 +29,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes'
   s.resources = 'Resources'
 
-  s.ios.exclude_files = 'Classes/osx'
   s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
   # s.frameworks = 'SomeFramework', 'AnotherFramework'
