@@ -1,0 +1,14 @@
+PODS:
+  - EENotificationManager (0.1)
+
+DEPENDENCIES:
+  - EENotificationManager (from `../EENotificationManager.podspec`)
+
+EXTERNAL SOURCES:
+  EENotificationManager:
+    :path: ../EENotificationManager.podspec
+
+SPEC CHECKSUMS:
+  EENotificationManager: 9e3d7e0178b00c6e24e598e0bbbc35963ee6f8ac
+
+COCOAPODS: 0.29.0

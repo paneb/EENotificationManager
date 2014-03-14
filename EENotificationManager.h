@@ -20,7 +20,7 @@
 #pragma mark - notification protocol
 @protocol EENotificationProtocol <NSObject>
 
-- (void)stateDidChange:(NSNotification *)notification;
+- (void)didReceiveNotification:(NSNotification *)notification;
 
 @end
 
@@ -28,9 +28,9 @@
 @interface EENotificationManager : NSObject <EENotificationProtocol>
 
 + (id)sharedInstance;
-- (void)addStateObserver:(NSObject<EENotificationProtocol>*)observer;
-- (void)removeStateObserver:(NSObject<EENotificationProtocol>*)observer;
+- (void)addNotificationObserver:(NSObject<EENotificationProtocol>*)observer;
+- (void)removeNotificationObserver:(NSObject<EENotificationProtocol>*)observer;
 
-- (void) willChangeState:(NSUInteger)state withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle;
+- (void) sendNotification:(NSUInteger)notification withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle;
 
 @end

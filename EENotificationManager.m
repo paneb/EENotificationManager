@@ -20,7 +20,7 @@
 {
     self = [super init];
     if(self){
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateDidChange:) name:EMIT_CHANGE object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNotification:) name:EMIT_CHANGE object:nil];
     }
     return self;
 }
@@ -43,40 +43,38 @@
 }
 
 #pragma mark - Observers
-- (void)addStateObserver:(NSObject<EENotificationProtocol>*)observer
+- (void)addNotificationObserver:(NSObject<EENotificationProtocol>*)observer
 {
-    [[NSNotificationCenter defaultCenter] addObserver:observer selector:@selector(stateDidChange:) name:RECEIVE_CHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:observer selector:@selector(didReceiveNotification:) name:RECEIVE_CHANGE object:nil];
 }
 
-- (void)removeStateObserver:(NSObject<EENotificationProtocol>*)observer
+- (void)removeNotificationObserver:(NSObject<EENotificationProtocol>*)observer
 {
     [[NSNotificationCenter defaultCenter] removeObserver:observer name:RECEIVE_CHANGE object:nil];
 }
 
 #pragma mark - ApplicationStateObserver
-- (void)stateDidChange:(NSNotification *)notification{
+- (void)didReceiveNotification:(NSNotification *)notification{
     
-    
-    //NSInteger state = [((NSNumber*)[[notification userInfo] objectForKey:@"state"]) longValue];
     
     NSNotification *myNotification = [NSNotification notificationWithName:RECEIVE_CHANGE object:self userInfo:[notification userInfo]];
     [[NSNotificationQueue defaultQueue] enqueueNotification:myNotification postingStyle:NSPostNow];
 }
 
 #pragma mark - Event Management
-- (void) willChangeState:(NSUInteger)state withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle
+- (void) sendNotification:(NSUInteger)notificationState withUserDict:(NSDictionary*)userDict andPostingStyle:(NSPostingStyle)postingStyle
 {
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithLong:state], @"state", userDict, @"userDict", [NSNumber numberWithInt:postingStyle], @"postingStyle", nil];
-    [self performSelectorOnMainThread:@selector(willChangeStateWithDictOnMainThread:) withObject:dict waitUntilDone:YES];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithLong:notificationState], @"state", userDict, @"userDict", [NSNumber numberWithInt:postingStyle], @"postingStyle", nil];
+    [self performSelectorOnMainThread:@selector(willReceiveNotificationWithDictOnMainThread:) withObject:dict waitUntilDone:YES];
     
 }
 
-- (void)willChangeStateWithDictOnMainThread:(NSDictionary*)dict
+- (void)willReceiveNotificationWithDictOnMainThread:(NSDictionary*)dict
 {
-    NSInteger state = [[dict valueForKey:@"state"] intValue];
+    NSInteger notificationState = [[dict valueForKey:@"state"] intValue];
     NSDictionary *userDict = [dict valueForKey:@"userDict"];
     
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithLong:state] forKey:@"state"];
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithObject:[NSNumber numberWithLong:notificationState] forKey:@"state"];
     if (userDict){
         [resultDict addEntriesFromDictionary:userDict];
     }
