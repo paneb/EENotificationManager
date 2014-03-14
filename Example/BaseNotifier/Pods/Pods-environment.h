@@ -6,9 +6,9 @@
 // project.
 
 
-// SVProgressHUD
-#define COCOAPODS_POD_AVAILABLE_SVProgressHUD
-#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
-#define COCOAPODS_VERSION_MINOR_SVProgressHUD 0
-#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
+// EENotificationManager
+#define COCOAPODS_POD_AVAILABLE_EENotificationManager
+#define COCOAPODS_VERSION_MAJOR_EENotificationManager 0
+#define COCOAPODS_VERSION_MINOR_EENotificationManager 0
+#define COCOAPODS_VERSION_PATCH_EENotificationManager 3
 

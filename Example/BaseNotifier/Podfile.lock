@@ -1,10 +1,14 @@
 PODS:
-  - SVProgressHUD (1.0)
+  - EENotificationManager (0.0.3-beta3)
 
 DEPENDENCIES:
-  - SVProgressHUD
+  - EENotificationManager (from `../../EENotificationManager.podspec`)
+
+EXTERNAL SOURCES:
+  EENotificationManager:
+    :path: ../../EENotificationManager.podspec
 
 SPEC CHECKSUMS:
-  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
+  EENotificationManager: 0374247a04169a86cf4da62e4a2f5b62c1d6954f
 
 COCOAPODS: 0.29.0
