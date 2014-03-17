@@ -7,6 +7,80 @@
 
 To run the example project; clone the repo, and run `pod install` from the Example directory first.
 
+To use the library, first declare a list of events:
+
+```objc
+enum DemoNotifications: NSInteger{
+    NotificationOne = 1,
+    NotificationTwo = 2,
+    NotificationThree = 3,
+    NotificationFour = 4
+};
+```
+
+To send new notification:
+
+```objc
+    [[EENotificationManager sharedInstance] sendNotification:NotificationOne withUserDict:nil andPostingStyle:NSPostNow];
+```
+
+To register for notification:
+
+```objc
+    [[EENotificationManager sharedInstance] addNotificationObserver:self];
+```
+
+To unregister for notification:
+
+```objc
+    [[EENotificationManager sharedInstance] removeNotificationObserver:self];
+```
+
+To receive notification use the protocol: 
+```objc
+@protocol EENotificationProtocol <NSObject>
+
+- (void)didReceiveNotification:(NSNotification *)notification;
+
+@end
+```
+
+and implement the selector:
+```objc
+- (void)didReceiveNotification:(NSNotification *)notification
+{
+    NSDictionary *infoDict = notification.userInfo;
+    enum DemoNotifications notificationType = [infoDict[@"state"] longValue];
+    switch (notificationType) {
+        case NotificationOne:
+        {
+            NSLog(@"In Notification One");
+            [[EENotificationManager sharedInstance] sendNotification:NotificationThree withUserDict:nil andPostingStyle:NSPostNow];
+            [[EENotificationManager sharedInstance] sendNotification:NotificationTwo withUserDict:nil andPostingStyle:NSPostNow];
+            break;
+        }
+        case NotificationTwo:
+        {
+            NSLog(@"In Notification Two");
+            break;
+        }
+        case NotificationThree:
+        {
+            NSLog(@"In Notification Three");
+            [[EENotificationManager sharedInstance] sendNotification:NotificationFour withUserDict:nil andPostingStyle:NSPostNow];
+            break;
+        }
+        case NotificationFour:
+        {
+            NSLog(@"In Notification Four");
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
 ## Requirements
 
 ## Installation
