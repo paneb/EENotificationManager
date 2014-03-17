@@ -3,11 +3,13 @@
 [![Version](http://cocoapod-badges.herokuapp.com/v/EENotificationManager/badge.png)](http://cocoadocs.org/docsets/EENotificationManager)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/EENotificationManager/badge.png)](http://cocoadocs.org/docsets/EENotificationManager)
 
+## Demo
+
+To run the example project; clone the repo, and run `pod install` from the EENotificationManagerDemo directory first.
+
 ## Usage
 
-To run the example project; clone the repo, and run `pod install` from the Example directory first.
-
-To use the library, first declare a list of events:
+To use the library, declare a list of events:
 
 ```objc
 enum DemoNotifications: NSInteger{
@@ -80,8 +82,6 @@ and implement the selector:
     }
 }
 ```
-
-## Requirements
 
 ## Installation
 
